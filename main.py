@@ -47,7 +47,7 @@ def gera_estrutura(ano):
     fig_graph_bar = px.bar(df_analise_admissoes_demissoes, x='ano', y=['qtd_admissoes', 'qtd_demissoes'],
                 labels={'value': 'Quantidade', 'variable': 'Indicador'},
                 title='Contratações e Demissões por Ano',
-                color_discrete_map={'qtd_admissoes': 'green', 'qtd_demissoes': 'red'})
+                color_discrete_map={'qtd_admissoes': '#4CAF50', 'qtd_demissoes': '#EF553B'})
 
     # Ajustando o layout do gráfico
     fig_graph_bar.update_layout(
@@ -56,6 +56,8 @@ def gera_estrutura(ano):
         plot_bgcolor='rgba(0, 0, 0, 0)',
         paper_bgcolor='rgba(0, 0, 0, 0)',
         font=dict(color='white'),
+        title_font_family="sans-serif",
+        title_font_size=18,
         margin=dict(l=40, r=40, t=40, b=40),
         showlegend=False
     )
@@ -72,7 +74,16 @@ def gera_estrutura(ano):
         plot_bgcolor='rgba(0, 0, 0, 0)',
         paper_bgcolor='rgba(0, 0, 0, 0)',
         font=dict(color='white'),
+        title_font_family="sans-serif",
+        title_font_size=18,
         margin=dict(l=40, r=40, t=40, b=40)  # Ajustando as margens para evitar corte
+    )
+
+    fig_pie_chart.update_traces(
+        textinfo='percent+label',         # Exibe o rótulo e o percentual
+        textfont=dict(color='white'),    # Altera a cor do texto
+        insidetextfont=dict(color='white'), # Garante que o texto interno também fique branco
+        outsidetextfont=dict(color='white') # Para rótulos fora do gráfico
     )
 
     table = dash_table.DataTable(
@@ -125,7 +136,8 @@ app.layout = dbc.Container([
                     options=[{"label": ano, "value": ano} for ano in df_base["ano_admissao"].unique()],
                     placeholder="Ano",
                     multi=False,
-                    value=2024
+                    value=datetime.now().year,
+                    clearable=False
                 ),
                 width=1,
                 style={'color': '#000000', 'padding': '10px'}
@@ -138,7 +150,7 @@ app.layout = dbc.Container([
                             html.H6(id="qtd_funcionarios_ativos", className="card-subtitle"),
                         ]
                     ),
-                    color="#4682B4",
+                    color="#636EFA",
                     inverse=True,
                     style={'height': '100%'}
                 ),
@@ -153,7 +165,7 @@ app.layout = dbc.Container([
                             html.H6(id="taxa_contratacoes_ano_anterior", className="card-subtitle"),
                         ]
                     ),
-                    color="#4682B4",
+                    color="#636EFA",
                     inverse=True,
                     style={'height': '100%'}
                 ),
@@ -168,7 +180,7 @@ app.layout = dbc.Container([
                             html.H6(id="taxa_demissoes_ano_anterior", className="card-subtitle"),
                         ]
                     ),
-                    color="#4682B4",
+                    color="#636EFA",
                     inverse=True,
                     style={'height': '100%'}
                 ),
@@ -183,7 +195,7 @@ app.layout = dbc.Container([
                             html.H6(id="turnover", className="card-subtitle"),
                         ]
                     ),
-                    color="#4682B4",
+                    color="#636EFA",
                     inverse=True,
                     style={'height': '100%'}
                 ),
@@ -210,7 +222,12 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col(
-                table,
+                html.Div(
+                    [
+                        html.H5("Título da Tabela", className="card-title", style={'color': 'white', 'textAlign': 'center', 'margin-bottom': '10px', 'font-family': 'sans-serif', 'font-size': '18px'}),  # Adicionando espaçamento
+                        table
+                    ]
+                ),
                 width=12,
                 style={'padding': '20px'}
             )
