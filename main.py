@@ -224,7 +224,7 @@ app.layout = dbc.Container([
             dbc.Col(
                 html.Div(
                     [
-                        html.H5("Título da Tabela", className="card-title", style={'color': 'white', 'textAlign': 'center', 'margin-bottom': '10px', 'font-family': 'sans-serif', 'font-size': '18px'}),  # Adicionando espaçamento
+                        html.H5("Funcionários ativos", className="card-title", style={'color': 'white', 'textAlign': 'center', 'margin-bottom': '10px', 'font-family': 'sans-serif', 'font-size': '18px'}),  # Adicionando espaçamento
                         table
                     ]
                 ),
